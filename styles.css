@@ -1,0 +1,41 @@
+.board{
+    height: 500px;
+    width: 500px; 
+    background-color: blueviolet;
+    grid-area: board;
+    display: grid;
+    grid-template-areas: 
+    "a1 a2"
+    "b1 b2";
+ }
+ 
+ #a1{grid-area: tpr}
+ #a2{grid-area: tpl}
+ #b1{grid-area: btr}
+ #b2{grid-area: btl}
+ 
+ .plySpace{
+    background-color: brown;
+ }
+ .plySpace:hover{
+    background-color: red;
+ }
+ .outSpace{
+    background-color: black;
+ }
+ .space{
+    display: flex;
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 50px;
+    align-items: center;
+    justify-content: center;
+ }
+ 
+ .plyrOnePawn{
+    height: 50%;
+    width: 50%;
+    background-color: white;
+    border-radius: 50%;
+ }
