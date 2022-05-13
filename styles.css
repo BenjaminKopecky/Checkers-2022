@@ -5,14 +5,28 @@
     grid-area: board;
     display: grid;
     grid-template-areas: 
-    "a1 a2"
-    "b1 b2";
+    "a1 a2 a3 a4"
+    "b1 b2 b3 b4"
+    "c1 c2 c3 b4"
+    "d1 d2 d3 d4";
  }
  
- #a1{grid-area: tpr}
- #a2{grid-area: tpl}
- #b1{grid-area: btr}
- #b2{grid-area: btl}
+ #a1{grid-area: a1}
+ #a2{grid-area: a2}
+ #a3{grid-area: a3}
+ #a4{grid-area: a4}
+ #b1{grid-area: b1}
+ #b2{grid-area: b2}
+ #b3{grid-area: b3}
+ #b4{grid-area: b4}
+ #c1{grid-area: c1}
+ #c2{grid-area: c2}
+ #c3{grid-area: c4}
+ #c4{grid-area: c4}
+ #d1{grid-area: d1}
+ #d2{grid-area: d2}
+ #d3{grid-area: d3}
+ #d4{grid-area: d4}
  
  .plySpace{
     background-color: brown;
@@ -39,3 +53,10 @@
     background-color: white;
     border-radius: 50%;
  }
+
+ .plyrTwoPawn{
+   height: 50%;
+   width: 50%;
+   background-color: black;
+   border-radius: 50%;
+}

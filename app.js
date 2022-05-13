@@ -1,21 +1,34 @@
 buttons = document.querySelectorAll(".space")
 
 
+let board = [
+    ["a1","a2","a3","a4"],
+    ["b1","b2","b3","b4"],
+    ["c1","c2","c3","c4"],
+    ["d1","d2","d3","d4"]
+];
+
+
 for(let i=0; i < buttons.length; i++){
     
     let pressed = buttons[i];
 
     pressed.addEventListener("click", function(){
-        console.log(pressed.childNodes.length)
-        if(pressed.childNodes.length>1){
-            console.log(pressed.hasChildNodes())
-        } else {
-            let peice = document.createElement("div")
-            peice.classList.add("plyrOnePawn")
-            pressed.append(peice)
+
+        
+        let child = pressed.children[0];
+        console.log(pressed.classList.contains("plySpace"))
+
+        if(child.classList.contains("plyrOnePawn")== true){
+            child.classList.remove("plyrOnePawn");
+            child.classList.add("plyrTwoPawn");
+        } else if(child.classList.contains("plyrTwoPawn")== true){
+            child.classList.remove("plyrTwoPawn");
+            child.classList.add("plyrOnePawn");
+        } else if(pressed.classList.contains("plySpace") == true) {
+            child.classList.add("plyrOnePawn");
         }
-        console.log(pressed.hasChildNodes())
-        console.log(pressed.childNodes)
+
     })
 
 }
