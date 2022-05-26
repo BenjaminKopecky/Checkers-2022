@@ -1,6 +1,4 @@
-
-
-buttons = document.querySelectorAll(".space")
+let = buttons = document.querySelectorAll(".space")
 
 
 let board = [
@@ -20,16 +18,16 @@ let turn = "plyrOnePawn"
 for(let i=0; i < buttons.length; i++){
     
     let pressed = buttons[i];
-    let selected = {
-        row   : 0,
-        column: 0,
-    }
 
     pressed.addEventListener("click", function(){
 
         let child = pressed.children[0];
+        
 
-        if(canMove(pressed)==true){
+        console.log(buttons[i].classList)
+        
+
+        if(canMove(pressed)==true && selectClassCorrect(buttons,turn) == true){
             move(child,buttons,turn)
 
             if(turn=="plyrOnePawn"){
@@ -37,75 +35,21 @@ for(let i=0; i < buttons.length; i++){
             } else {
                 turn = "plyrOnePawn"
             }
-        
-        }
 
-        // board calculation //
-        console.log(i)
-        if(i>55){
-            selected.row = 7;
-            selected.column=(i-56)
-            console.log(selected.row,selected.column);
-        } else if(i>47){
-            selected.row = 6;
-            selected.column=(i-48)
-            console.log(selected.row,selected.column);
-        } else if(i>39){
-            selected.row = 5;
-            selected.column=(i-40)
-            console.log(selected.row,selected.column);
-        } else if(i>31){
-            selected.row = 4;
-            selected.column=(i-32)
-            console.log(selected.row,selected.column);
-        } else if(i>23){
-            selected.row = 3;
-            selected.column=(i-24)
-            console.log(selected.row,selected.column);
-        } else if(i>15){
-            selected.row = 2;
-            selected.column=(i-16)
-            console.log(selected.row,selected.column);
-        } else if(i>7){
-            selected.row = 1;
-            selected.column=(i-8)
-            console.log(selected.row,selected.column);
-        } else {
-            selected.row = 0;
-            selected.column=(i)
-            console.log(selected.row,selected.column);
-        };
-
-        // peice GUI //
-
-        console.log(buttons[i].classList)
-
-        if(buttons[i].classList.contains("selected") == false){
             for(let j = 0; j < buttons.length;j++){
-                
+            
                 if(buttons[j].classList.contains("selected")){
                     buttons[j].classList.remove("selected")
                 } else if(buttons[j].classList.contains("possible")){
                     buttons[j].classList.remove("possible")
                 }
-
-
+    
+    
             }
+        } else {
+            select(child,buttons,i)
         }
-
-        select(child,buttons,i,selected)
-
-
-        // Peice Movement //
-
-            // function newSelection(){
-                
-            // }
-        
-        
-
-        
-        lastPressed = pressed
+ 
     })
 
 }
