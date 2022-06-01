@@ -38,11 +38,55 @@ function move(child,buttons,turn){
         if(buttons[n].classList.contains("selected")){
             buttons[n].children[0].classList.remove(turn)
         }
+        
     }
 
 }
 
-function select(child,buttons,i){
+function locationOnBrd(i){
+    let selected = {
+        row   : 0,
+        column: 0,
+    }
+
+    if(i>55){
+        selected.row = 7;
+        selected.column=(i-56)
+        console.log(selected.row,selected.column);
+    } else if(i>47){
+        selected.row = 6;
+        selected.column=(i-48)
+        console.log(selected.row,selected.column);
+    } else if(i>39){
+        selected.row = 5;
+        selected.column=(i-40)
+        console.log(selected.row,selected.column);
+    } else if(i>31){
+        selected.row = 4;
+        selected.column=(i-32)
+        console.log(selected.row,selected.column);
+    } else if(i>23){
+        selected.row = 3;
+        selected.column=(i-24)
+        console.log(selected.row,selected.column);
+    } else if(i>15){
+        selected.row = 2;
+        selected.column=(i-16)
+        console.log(selected.row,selected.column);
+    } else if(i>7){
+        selected.row = 1;
+        selected.column=(i-8)
+        console.log(selected.row,selected.column);
+    } else {
+        selected.row = 0;
+        selected.column=(i)
+        console.log(selected.row,selected.column);
+    };
+
+    return [selected.row,selected.column]
+}
+
+function select(child,buttons,i,turn,next,pressed){
 
     if(buttons[i].classList.contains("selected") == false){
         for(let j = 0; j < buttons.length;j++){
@@ -51,6 +95,8 @@ function select(child,buttons,i){
                 buttons[j].classList.remove("selected")
             } else if(buttons[j].classList.contains("possible")){
                 buttons[j].classList.remove("possible")
+            } else if(buttons[j].classList.contains("killSpace")){
+                buttons[j].classList.remove("killSpace")
             }
 
 
@@ -59,110 +105,62 @@ function select(child,buttons,i){
 
     if(child.classList.contains("plyrOnePawn") == true || child.classList.contains("plyrTwoPawn") == true){
         
-        let selected = {
-            row   : 0,
-            column: 0,
-        }
+        const cordnets = locationOnBrd(i)
+        const col = cordnets[1]
 
-        if(i>55){
-            selected.row = 7;
-            selected.column=(i-56)
-            console.log(selected.row,selected.column);
-        } else if(i>47){
-            selected.row = 6;
-            selected.column=(i-48)
-            console.log(selected.row,selected.column);
-        } else if(i>39){
-            selected.row = 5;
-            selected.column=(i-40)
-            console.log(selected.row,selected.column);
-        } else if(i>31){
-            selected.row = 4;
-            selected.column=(i-32)
-            console.log(selected.row,selected.column);
-        } else if(i>23){
-            selected.row = 3;
-            selected.column=(i-24)
-            console.log(selected.row,selected.column);
-        } else if(i>15){
-            selected.row = 2;
-            selected.column=(i-16)
-            console.log(selected.row,selected.column);
-        } else if(i>7){
-            selected.row = 1;
-            selected.column=(i-8)
-            console.log(selected.row,selected.column);
-        } else {
-            selected.row = 0;
-            selected.column=(i)
-            console.log(selected.row,selected.column);
-        };
+        console.log(cordnets,"cords")
 
         buttons[i].classList.add("selected")
 
-        if(selected.row == (board[0].length)-1 && selected.column == 0){
+        ///////////////////////////////////////
 
-            if(buttons[i-7].children[0].classList.contains("plyrOnePawn") == false && buttons[i-7].children[0].classList.contains("plyrTwoPawn") == false){
-                buttons[i-7].classList.add("possible")
-            }
-        }else if( selected.row == 0 && selected.column == (board.length - 1)){
+        const moveVal = [-7,-9,7,9]
+        const atckVal = [-14,-18,14,18]
 
-            if(buttons[i+7].children[0].classList.contains("plyrOnePawn") == false && buttons[i+7].children[0].classList.contains("plyrTwoPawn") == false){
-                buttons[i+7].classList.add("possible")
-            }
+        let places = []
+        let placeVal = [[],[]]
+        let kill = []
 
-        }else if(selected.row == 0){
+        if(col < 1){
+            placeVal[0].push(moveVal[1],moveVal[2])
+            placeVal[1].push(atckVal[1],atckVal[2])
 
-            if(buttons[i+9].children[0].classList.contains("plyrOnePawn") == false && buttons[i+9].children[0].classList.contains("plyrTwoPawn") == false){
-                buttons[i+9].classList.add("possible")
-            }
-            if(buttons[i+7].children[0].classList.contains("plyrOnePawn") == false && buttons[i+7].children[0].classList.contains("plyrTwoPawn") == false){
-                buttons[i+7].classList.add("possible")
-            }
-
-        } else if(selected.row == (board[0].length)-1){
-
-            if(buttons[i-9].children[0].classList.contains("plyrOnePawn") == false && buttons[i-9].children[0].classList.contains("plyrTwoPawn") == false){
-                buttons[i-9].classList.add("possible")
-            }
-            if(buttons[i-7].children[0].classList.contains("plyrOnePawn") == false && buttons[i-7].children[0].classList.contains("plyrTwoPawn") == false){
-                buttons[i-7].classList.add("possible")
-            }
-
-        } else if(selected.column == 0){
-
-            if(buttons[i+9].children[0].classList.contains("plyrOnePawn") == false && buttons[i+9].children[0].classList.contains("plyrTwoPawn") == false){
-                buttons[i+9].classList.add("possible")
-            }
-            if(buttons[i-7].children[0].classList.contains("plyrOnePawn") == false && buttons[i-7].children[0].classList.contains("plyrTwoPawn") == false){
-                buttons[i-7].classList.add("possible")
-            }
-
-        }else if(selected.column == (board[0].length)-1){
-            
-            if(buttons[i-9].children[0].classList.contains("plyrOnePawn") == false && buttons[i-9].children[0].classList.contains("plyrTwoPawn") == false){
-                buttons[i-9].classList.add("possible")
-            }
-            if(buttons[i+7].children[0].classList.contains("plyrOnePawn") == false && buttons[i+7].children[0].classList.contains("plyrTwoPawn") == false){
-                buttons[i+7].classList.add("possible")
-            }
-
+        } else if(col > 6){
+            placeVal[0].push(moveVal[0],moveVal[3])
+            placeVal[1].push(atckVal[0],atckVal[3])
         } else {
-
-            if(buttons[i-9].children[0].classList.contains("plyrOnePawn") == false && buttons[i-9].children[0].classList.contains("plyrTwoPawn") == false){
-                buttons[i-9].classList.add("possible")
-            }
-            if(buttons[i+9].children[0].classList.contains("plyrOnePawn") == false && buttons[i+9].children[0].classList.contains("plyrTwoPawn") == false){
-                buttons[i+9].classList.add("possible")
-            }
-            if(buttons[i-7].children[0].classList.contains("plyrOnePawn") == false && buttons[i-7].children[0].classList.contains("plyrTwoPawn") == false){
-                buttons[i-7].classList.add("possible")
-            }
-            if(buttons[i+7].children[0].classList.contains("plyrOnePawn") == false && buttons[i+7].children[0].classList.contains("plyrTwoPawn") == false){
-                buttons[i+7].classList.add("possible")
-            }
-
+            placeVal[0] = moveVal
+            placeVal[1] = atckVal
         }
+
+        for(let v = 0; v < placeVal[0].length;v++){
+
+            let dex = placeVal[0][v]
+
+            try {
+
+                if(buttons[i-dex].children[0].classList.contains(turn) == false && buttons[i-dex].children[0].classList.contains(next) == false){
+                    places.push(i-dex)
+                } else if(buttons[i-dex].children[0].classList.contains(next) == true && buttons[i-placeVal[1][v]].children[0].classList.contains(next) == false && buttons[i-placeVal[1][v]].children[0].classList.contains(turn) == false){
+                    places.push(i-placeVal[1][v])
+                    kill.push(i-dex)
+                }
+
+            } catch(err){
+                
+                console.log("value not possible",placeVal[0][v])
+                console.log(err,"error msg")
+                
+            }
+        }
+
+        for(let p = 0; p < places.length; p++){
+                buttons[places[p]].classList.add("possible")
+        }
+        for(let k = 0; k < kill.length; k++){
+            buttons[kill[k]].classList.add("killSpace")
+        }
+
     }
 }
 

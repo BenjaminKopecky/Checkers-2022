@@ -100,6 +100,9 @@
  .outSpace{
     background-color: black;
  }
+ .killSpace{
+   background-color: orangered;
+ }
  .space{
     display: flex;
     margin: 0;

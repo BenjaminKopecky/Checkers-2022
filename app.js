@@ -13,6 +13,7 @@ let board = [
 ]
 
 let turn = "plyrOnePawn"
+let next = "plyrTwoPawn"
 
 
 for(let i=0; i < buttons.length; i++){
@@ -31,9 +32,11 @@ for(let i=0; i < buttons.length; i++){
             move(child,buttons,turn)
 
             if(turn=="plyrOnePawn"){
+                next = "plyrOnePawn"
                 turn = "plyrTwoPawn"
             } else {
                 turn = "plyrOnePawn"
+                next = "plyrTwoPawn"
             }
 
             for(let j = 0; j < buttons.length;j++){
@@ -47,7 +50,7 @@ for(let i=0; i < buttons.length; i++){
     
             }
         } else {
-            select(child,buttons,i)
+            select(child,buttons,i,turn,next,pressed)
         }
  
     })
