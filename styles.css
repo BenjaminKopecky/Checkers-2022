@@ -103,6 +103,9 @@
  .killSpace{
    background-color: orangered;
  }
+ .flagSpace{
+    background-color: blueviolet;
+ }
  .space{
     display: flex;
     margin: 0;

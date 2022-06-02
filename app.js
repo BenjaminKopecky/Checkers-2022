@@ -29,7 +29,7 @@ for(let i=0; i < buttons.length; i++){
         
 
         if(canMove(pressed)==true && selectClassCorrect(buttons,turn) == true){
-            move(child,buttons,turn)
+            move(child,pressed,i,buttons,turn,next)
 
             if(turn=="plyrOnePawn"){
                 next = "plyrOnePawn"
@@ -45,6 +45,8 @@ for(let i=0; i < buttons.length; i++){
                     buttons[j].classList.remove("selected")
                 } else if(buttons[j].classList.contains("possible")){
                     buttons[j].classList.remove("possible")
+                } else if(buttons[j].classList.contains("killSpace")){
+                    buttons[j].classList.remove("killSpace")
                 }
     
     

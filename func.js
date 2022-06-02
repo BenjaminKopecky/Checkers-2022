@@ -31,14 +31,28 @@ function canMove(pressed){
     
 }
 
-function move(child,buttons,turn){
-    
+function move(child,pressed,i,buttons,turn,next){
+    const check = [-14,-18,14,18]
     child.classList.add(turn)
+
+    for(let c = 0; c<check.length; c++){
+        console.log(check[c])
+
+        try{
+
+            if(buttons[i - check[c]].classList.contains("selected") == true){
+                buttons[i - (check[c])/2].classList.remove(next)
+                buttons[i - (check[c])/2].classList.add("flagSpace")
+            }
+        } catch {
+
+        }
+    }
+    
     for(let n=0; n<buttons.length; n++){
         if(buttons[n].classList.contains("selected")){
             buttons[n].children[0].classList.remove(turn)
         }
-        
     }
 
 }
