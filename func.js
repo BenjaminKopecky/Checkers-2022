@@ -1,16 +1,7 @@
 // This document contains all the functions used in the main js file (app.js) //
 
-// function noneSelected(buttons,i){
-//     for(let i = 0; i<buttons.length;i++){
-//         if(buttons[i].classList.contains("selected")==true){
-//             return false
-//         }
-//     }
-//     return true
-// }
 
 function selectClassCorrect(buttons,turn){
-    // let selected
     for(let i = 0; i<buttons.length;i++){
         if(buttons[i].classList.contains("selected") == true && buttons[i].children[0].classList.contains(turn)){
             return true
@@ -31,7 +22,7 @@ function canMove(pressed){
     
 }
 
-function move(child,pressed,i,buttons,turn,next){
+function move(child,i,buttons,turn,next){
     const check = [-14,-18,14,18]
     child.classList.add(turn)
 
@@ -41,8 +32,7 @@ function move(child,pressed,i,buttons,turn,next){
         try{
 
             if(buttons[i - check[c]].classList.contains("selected") == true){
-                buttons[i - (check[c])/2].classList.remove(next)
-                buttons[i - (check[c])/2].classList.add("flagSpace")
+                buttons[i - (check[c])/2].children[0].classList.remove(next)
             }
         } catch {
 
@@ -126,9 +116,19 @@ function select(child,buttons,i,turn,next,pressed){
 
         buttons[i].classList.add("selected")
 
-        ///////////////////////////////////////
+        const posMoveVal = [-7,-9,7,9]
+        let moveVal = []
 
-        const moveVal = [-7,-9,7,9]
+        if(child.classList.contains("plyrTwoPawn")){
+            // moveVal.add(posMoveVal[0],posMoveVal[1])
+            console.log("up")
+        } else {
+            // moveVal.add(posMoveVal[2],posMoveVal[3])
+            console.log("down")
+        }
+
+        moveVal = posMoveVal
+
         const atckVal = [-14,-18,14,18]
 
         let places = []
@@ -137,13 +137,16 @@ function select(child,buttons,i,turn,next,pressed){
 
         if(col < 1){
             placeVal[0].push(moveVal[1],moveVal[2])
-            placeVal[1].push(atckVal[1],atckVal[2])
-
         } else if(col > 6){
             placeVal[0].push(moveVal[0],moveVal[3])
-            placeVal[1].push(atckVal[0],atckVal[3])
         } else {
             placeVal[0] = moveVal
+
+        } if(col > 5) {
+            placeVal[1].push(atckVal[0],atckVal[3])
+        } else if(col < 2){
+            placeVal[1].push(atckVal[1],atckVal[2])
+        } else {
             placeVal[1] = atckVal
         }
 
