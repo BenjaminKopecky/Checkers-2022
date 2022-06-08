@@ -1,6 +1,11 @@
+body{
+   text-align: center;
+}
+
 .board{
     height: 800px;
     width: 800px; 
+    margin: auto;
     background-color: blueviolet;
     grid-area: board;
     display: grid;
