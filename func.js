@@ -24,10 +24,25 @@ function canMove(pressed){
 
 function move(child,i,buttons,turn,next){
     const check = [-14,-18,14,18]
-    child.classList.add(turn)
+
+    for(let b=0; b<buttons.length; b++){
+        
+        if(buttons[b].classList.contains("selected")){
+
+            if(buttons[b].children[0].classList.contains("king")){
+                child.classList.add(turn)
+                child.classList.add("king")
+                child.innerHTML = "K"
+                console.log("bigmack")
+            }else{
+                child.classList.add(turn)
+                console.log("cheeseburger")
+            }
+        }
+    }
 
     for(let c = 0; c<check.length; c++){
-        console.log(check[c])
+        // console.log(check[c])
 
         try{
 
@@ -42,6 +57,10 @@ function move(child,i,buttons,turn,next){
     for(let n=0; n<buttons.length; n++){
         if(buttons[n].classList.contains("selected")){
             buttons[n].children[0].classList.remove(turn)
+            if(buttons[n].children[0].classList.contains("king")){
+                buttons[n].children[0].classList.remove("king")
+                buttons[n].children[0].innerHTML = ""
+            }
         }
     }
 
@@ -56,39 +75,125 @@ function locationOnBrd(i){
     if(i>55){
         selected.row = 7;
         selected.column=(i-56)
-        console.log(selected.row,selected.column);
+        // console.log(selected.row,selected.column);
     } else if(i>47){
         selected.row = 6;
         selected.column=(i-48)
-        console.log(selected.row,selected.column);
+        // console.log(selected.row,selected.column);
     } else if(i>39){
         selected.row = 5;
         selected.column=(i-40)
-        console.log(selected.row,selected.column);
+        // console.log(selected.row,selected.column);
     } else if(i>31){
         selected.row = 4;
         selected.column=(i-32)
-        console.log(selected.row,selected.column);
+        // console.log(selected.row,selected.column);
     } else if(i>23){
         selected.row = 3;
         selected.column=(i-24)
-        console.log(selected.row,selected.column);
+        // console.log(selected.row,selected.column);
     } else if(i>15){
         selected.row = 2;
         selected.column=(i-16)
-        console.log(selected.row,selected.column);
+        // console.log(selected.row,selected.column);
     } else if(i>7){
         selected.row = 1;
         selected.column=(i-8)
-        console.log(selected.row,selected.column);
+        // console.log(selected.row,selected.column);
     } else {
         selected.row = 0;
         selected.column=(i)
-        console.log(selected.row,selected.column);
+        // console.log(selected.row,selected.column);
     };
 
     return [selected.row,selected.column]
 }
+
+function decideSpace(i,child,turn){
+
+    const cordnets = locationOnBrd(i)
+        const col = cordnets[1]
+
+        // console.log(cordnets,"cords")
+
+        const posMoveVal = [-7,-9,7,9]
+        let moveVal = []
+        let atckVal = []
+
+        if(child.classList.contains("plyrTwoPawn")){
+            console.log("up")
+        } else {
+            console.log("down")
+        }
+
+        let placeVal = [[],[]]
+
+        // console.log("innerHTML",child.innerHTML)
+        
+        if(child.innerHTML == "K"){
+
+            moveVal = posMoveVal
+            
+            for(let t = 0; t<posMoveVal.length; t++){
+                atckVal.push(placeVal[t]*2)
+            }
+
+            if(col < 1){
+                placeVal[0].push(moveVal[1],moveVal[2])
+            } else if(col > 6){
+                placeVal[0].push(moveVal[0],moveVal[3])
+            } else {
+                placeVal[0] = moveVal
+            }
+
+            if(col > 5) {
+                placeVal[1].push(atckVal[0],atckVal[3])
+            } else if(col < 2){
+                placeVal[1].push(atckVal[1],atckVal[2])
+            } else {
+                placeVal[1] = atckVal
+            }
+
+        } else {
+
+            // console.log(turn)
+
+            if(turn == "plyrTwoPawn"){
+                // console.log("moveset black")
+                moveVal.push(posMoveVal[3],posMoveVal[2])
+                atckVal.push((posMoveVal[3]*2),(posMoveVal[2]*2))
+
+            } else {
+                // console.log("moveset white")
+                moveVal.push(posMoveVal[0],posMoveVal[1])
+                atckVal.push((posMoveVal[0]*2),(posMoveVal[1]*2))
+            }
+
+            if(col < 1){
+                placeVal[0].push(moveVal[1])
+            } else if(col > 6){
+                placeVal[0].push(moveVal[0])
+            } else {
+                placeVal[0] = moveVal
+            }
+
+            if(col > 5) {
+                placeVal[1].push(atckVal[0])
+            } else if(col < 2){
+                placeVal[1].push(atckVal[1])
+            } else {
+                placeVal[1] = atckVal
+            }
+        } 
+
+        // console.log("placeval", placeVal)
+
+        return placeVal
+
+}
+
+
+
 
 function select(child,buttons,i,turn,next,pressed){
 
@@ -108,16 +213,13 @@ function select(child,buttons,i,turn,next,pressed){
     }
 
     if(child.classList.contains("plyrOnePawn") == true || child.classList.contains("plyrTwoPawn") == true){
-        
-        const cordnets = locationOnBrd(i)
-        const col = cordnets[1]
 
-        console.log(cordnets,"cords")
+        let placeVal = decideSpace(i,child,turn)
 
         buttons[i].classList.add("selected")
 
-        const posMoveVal = [-7,-9,7,9]
-        let moveVal = []
+        // const posMoveVal = [-7,-9,7,9]
+        // let moveVal = []
 
         if(child.classList.contains("plyrTwoPawn")){
             // moveVal.add(posMoveVal[0],posMoveVal[1])
@@ -127,28 +229,10 @@ function select(child,buttons,i,turn,next,pressed){
             console.log("down")
         }
 
-        moveVal = posMoveVal
-
         const atckVal = [-14,-18,14,18]
 
         let places = []
-        let placeVal = [[],[]]
         let kill = []
-
-        if(col < 1){
-            placeVal[0].push(moveVal[1],moveVal[2])
-        } else if(col > 6){
-            placeVal[0].push(moveVal[0],moveVal[3])
-        } else {
-            placeVal[0] = moveVal
-
-        } if(col > 5) {
-            placeVal[1].push(atckVal[0],atckVal[3])
-        } else if(col < 2){
-            placeVal[1].push(atckVal[1],atckVal[2])
-        } else {
-            placeVal[1] = atckVal
-        }
 
         for(let v = 0; v < placeVal[0].length;v++){
 

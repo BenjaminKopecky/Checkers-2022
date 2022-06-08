@@ -10,14 +10,30 @@ for(let i=0; i < buttons.length; i++){
 
     pressed.addEventListener("click", function(){
 
+        // console.log("pressed",buttons[i])
+
         let child = pressed.children[0];
         
 
-        console.log(buttons[i].classList)
+        // console.log(buttons[i].classList)
+
+        // console.log("Checking Conditionals", canMove(pressed), selectClassCorrect(buttons,turn))
         
 
         if(canMove(pressed)==true && selectClassCorrect(buttons,turn) == true){
+            // console.log("move?")
             move(child,i,buttons,turn,next)
+
+            const loc = locationOnBrd(i)
+            const row = loc[0]
+
+            if(row == 0 && turn == "plyrTwoPawn"){
+                child.innerHTML = "K"
+                child.classList.add("king")
+            } else if(row == 7 && turn == "plyrOnePawn"){
+                child.innerHTML = "K"
+                child.classList.add("king")
+            }
 
             if(turn=="plyrOnePawn"){
                 next = "plyrOnePawn"
@@ -40,7 +56,7 @@ for(let i=0; i < buttons.length; i++){
     
             }
         } else {
-            select(child,buttons,i,turn,next,pressed)
+            select(child,buttons,i,turn,next)
         }
  
     })

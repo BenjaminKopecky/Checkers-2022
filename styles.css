@@ -111,7 +111,8 @@
     margin: 0;
     padding: 0;
     color: white;
-    font-size: 50px;
+    width: 100px;
+    height: 100px;
     align-items: center;
     justify-content: center;
  }
@@ -139,4 +140,11 @@
    width: 50%;
    background-color: black;
    border-radius: 50%;
+}
+
+.king{
+   color: blueviolet;
+   font-size: 40px;
+   text-align: center;
+   justify-items: center;
 }
